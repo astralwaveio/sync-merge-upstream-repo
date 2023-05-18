@@ -1,0 +1,53 @@
+name: Sync and merge upstream repository
+description: sync and merge upstream repository and current repository.
+author: Maximo
+
+inputs:
+  upstream_repo:
+    description: Upstream repo URL (GitHub)
+    required: true
+  upstream_branch:
+    description: Upstream Branch (which repo to sync)
+    required: false
+    default: "main"
+  downstream_branch:
+    description: Downstream Branch (Current repo sync)
+    required: false
+    default: "main"
+  token:
+    description: GitHub Bot token
+    required: true
+  fetch_args:
+    description: Git fetch arguments
+    required: false
+    default: ""
+  merge_args:
+    description: Git merge arguments
+    required: false
+    default: ""
+  push_args:
+    description: Git push arguments
+    required: false
+    default: ""
+  spawn_logs: 
+    description: Toggle to spawn `sync-merge-upstream-repo` with time logs
+    required: true
+    default: false
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.upstream_repo }}
+    - ${{ inputs.upstream_branch }}
+    - ${{ inputs.downstream_branch }}
+    - ${{ inputs.token }}
+    - ${{ inputs.fetch_args }}
+    - ${{ inputs.merge_args }}
+    - ${{ inputs.push_args }}
+    - ${{ inputs.spawn_logs }}
+
+branding:
+  icon: "git-merge"
+  color: "purple"
+
